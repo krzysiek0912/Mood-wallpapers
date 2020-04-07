@@ -1,0 +1,39 @@
+{
+    "extends": ["airbnb", "prettier", "prettier/react"],
+    "parser": "babel-eslint",
+    "env": {
+        "jest": true,
+        "browser": true
+    },
+    "rules": {
+        "react/prop-types": [1, {}],
+        "react/jsx-props-no-spreading": [1, {}],
+        "react/state-in-constructor": [1, "always"],
+        "import/no-extraneous-dependencies": [
+            1,
+            {
+                "devDependencies": [".storybook/**", "**/*.stories.js"]
+            }
+        ],
+        "no-use-before-define": [
+            1,
+            {
+                "functions": true,
+                "classes": true
+            }
+        ],
+        "react/jsx-filename-extension": [
+            1,
+            {
+                "extensions": [".js"]
+            }
+        ]
+    },
+    "settings": {
+        "import/resolver": {
+            "node": {
+                "paths": ["src"]
+            }
+        }
+    }
+}
