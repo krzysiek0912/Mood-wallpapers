@@ -1,6 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { resetRequestObj, getErrorRequest } from '../redux/requestRedux';
 import SettingSidebar from '../components/features/SettingSidebar/SettingSidebar';
+import Notification from '../components/common/Notification/Notification';
 
 const StyledWrapperHeader = styled.div`
     padding: 0 40px 15px;
@@ -11,13 +15,33 @@ const StyledH1 = styled.h1`
     text-align: center;
     color: gray;
 `;
-const Header = () => {
+const Header = (props) => {
+    const { errors, resetRequest } = props;
+    const notyfications = errors.map((error) => (
+        <Notification type="danger" closeAction={resetRequest}>
+            {error}
+        </Notification>
+    ));
     return (
         <StyledWrapperHeader>
-            <StyledH1>Mood wallpapers</StyledH1>
+            <StyledH1 className="h1">Mood wallpapers</StyledH1>
             <SettingSidebar />
+            {notyfications}
         </StyledWrapperHeader>
     );
 };
+Header.propTypes = {
+    errors: PropTypes.arrayOf(PropTypes.string),
+    resetRequest: PropTypes.func.isRequired,
+};
+Header.defaultProps = {
+    errors: [],
+};
 
-export default Header;
+const mapStateToProps = (state) => ({
+    errors: getErrorRequest(state),
+});
+const mapDispatchToProps = (dispatch) => ({
+    resetRequest: () => dispatch(resetRequestObj()),
+});
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

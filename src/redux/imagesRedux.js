@@ -5,15 +5,22 @@ import { accessKey } from '../configApp';
 /* SELECTORS */
 export const getImages = ({ images }) => images.list;
 export const getFavImages = ({ images }) => images.fav;
+export const getSearchParams = ({ images }) => images.searchParams;
+export const getSearchString = ({ images }) => {
+    const { timeOfDay, timeOfYear, customText } = images.searchParams;
+    return `${timeOfDay} ${timeOfYear} ${customText}`;
+};
 
 // action name creator
 const reducerName = 'images';
 const createActionName = (name) => `app/${reducerName}/${name}`;
 
 export const LOAD_IMAGES = createActionName('LOAD_IMAGES');
+export const SET_SEARCH_PARAMS = createActionName('SET_SEARCH_PARAMS');
 
 /* ACTIONS */
 export const loadImages = (payload) => ({ payload, type: LOAD_IMAGES });
+export const setSearchParamsRequest = (payload) => ({ payload, type: SET_SEARCH_PARAMS });
 
 /* THUNKS */
 export const loadImagesRequest = (term = 'night') => {
@@ -54,12 +61,19 @@ const localState =
 const initialState = {
     list: localState.list || [],
     fav: [],
+    searchParams: localState.searchParams || {
+        timeOfDay: '',
+        timeOfYear: '',
+        customText: '',
+    },
 };
 
 export default function reducer(statePart = initialState, action = {}) {
     switch (action.type) {
         case LOAD_IMAGES:
             return { ...statePart, list: action.payload };
+        case SET_SEARCH_PARAMS:
+            return { ...statePart, searchParams: { ...action.payload } };
         default:
             return statePart;
     }

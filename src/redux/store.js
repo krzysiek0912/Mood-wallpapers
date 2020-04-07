@@ -8,7 +8,6 @@ import request from './requestRedux';
 const localStorageMiddleware = ({ getState }) => {
     return (next) => (action) => {
         const result = next(action);
-        console.log('localStorageMiddleware', result);
         if (action.payload) localStorage.setItem('images', JSON.stringify(getState().images));
         return result;
     };
