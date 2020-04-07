@@ -2,7 +2,6 @@ import axios from 'axios';
 import { startRequest, endRequest, errorRequest } from './requestRedux';
 import { accessKey } from '../configApp';
 
-// const accessKey = process.env.REACT_APP_ACCESS_KEY;
 /* SELECTORS */
 export const getImages = ({ images }) => images.list;
 export const getFavImages = ({ images }) => images.fav;
@@ -30,14 +29,14 @@ export const loadImagesRequest = (term = 'night') => {
             const results = res.data.results.slice(0, 9);
             const images = results.map((result) => {
                 const { id, description, links, tags, urls, user } = result;
-                const { username } = user;
+                const { name } = user;
                 const image = {
                     id,
                     description,
                     links,
                     tags,
                     urls,
-                    username,
+                    author: name,
                 };
                 return image;
             }, []);
@@ -49,8 +48,11 @@ export const loadImagesRequest = (term = 'night') => {
     };
 };
 
+const localState =
+    localStorage.getItem('images') !== null ? JSON.parse(localStorage.getItem('images')) : [];
+
 const initialState = {
-    list: [],
+    list: localState.list || [],
     fav: [],
 };
 

@@ -40,7 +40,16 @@ class SearchResults extends Component {
 
 SearchResults.propTypes = {
     loadImages: PropTypes.func.isRequired,
-    images: PropTypes.number.isRequired,
+    images: PropTypes.arrayOf(
+        PropTypes.shape({
+            id: PropTypes.string,
+            urls: PropTypes.shape({
+                regular: PropTypes.string,
+            }),
+            altDescription: PropTypes.string,
+            author: PropTypes.string,
+        }),
+    ).isRequired,
 };
 const mapStateToProps = (state) => ({
     images: getImages(state),
