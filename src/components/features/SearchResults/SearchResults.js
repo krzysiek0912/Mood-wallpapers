@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import SingleImage from '../../common/SingleImage/SingleImage';
-import { loadImagesRequest, getImages } from '../../../redux/imagesRedux';
+import { loadDefaultImagesRequest, getImages, getSearchString } from '../../../redux/imagesRedux';
 
 const StyledImagesContainer = styled.div`
     display: grid;
@@ -12,8 +12,8 @@ const StyledImagesContainer = styled.div`
 
 class SearchResults extends Component {
     componentDidMount() {
-        const { loadImages } = this.props;
-        loadImages();
+        const { loadDefaultImages, searchString } = this.props;
+        loadDefaultImages(searchString);
     }
 
     render() {
@@ -39,7 +39,8 @@ class SearchResults extends Component {
 }
 
 SearchResults.propTypes = {
-    loadImages: PropTypes.func.isRequired,
+    searchString: PropTypes.string.isRequired,
+    loadDefaultImages: PropTypes.func.isRequired,
     images: PropTypes.arrayOf(
         PropTypes.shape({
             id: PropTypes.string,
@@ -53,8 +54,9 @@ SearchResults.propTypes = {
 };
 const mapStateToProps = (state) => ({
     images: getImages(state),
+    searchString: getSearchString(state),
 });
 const mapDispatchToProps = (dispatch) => ({
-    loadImages: () => dispatch(loadImagesRequest()),
+    loadDefaultImages: () => dispatch(loadDefaultImagesRequest()),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(SearchResults);
