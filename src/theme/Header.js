@@ -1,20 +1,22 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { resetRequestObj, getErrorRequest } from '../redux/requestRedux';
+import Navbar from './Navbar';
 import SettingSidebar from '../components/features/SettingSidebar/SettingSidebar';
 import Notification from '../components/common/Notification/Notification';
 
 const StyledWrapperHeader = styled.div`
     padding: 0 40px 15px;
 `;
-const StyledH1 = styled.h1`
-    padding: 0;
-    margin: 0;
-    text-align: center;
-    color: gray;
+
+const StyledErrorWrapper = styled.div`
+    position: fixed;
+    top: 10px;
+    left: 15%;
+    width: 70%;
+    z-index: 9999;
 `;
 const Header = (props) => {
     const { errors, resetRequest } = props;
@@ -24,13 +26,13 @@ const Header = (props) => {
         </Notification>
     ));
     return (
-        <StyledWrapperHeader>
-            <StyledH1 className="h1">Mood wallpapers</StyledH1>
-            <NavLink to="/">Home</NavLink>
-            <NavLink to="/favorite">Favorite</NavLink>
-            <SettingSidebar />
-            {notyfications}
-        </StyledWrapperHeader>
+        <>
+            <StyledErrorWrapper>{notyfications}</StyledErrorWrapper>
+            <StyledWrapperHeader>
+                <Navbar />
+                <SettingSidebar />
+            </StyledWrapperHeader>
+        </>
     );
 };
 Header.propTypes = {

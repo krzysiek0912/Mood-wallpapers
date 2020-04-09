@@ -2,6 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
+import Notification from '../../common/Notification/Notification';
 import { getFavoriesList } from '../../../redux/favoriteReedux';
 import SingleImage from '../../common/SingleImage/SingleImage';
 
@@ -14,7 +16,13 @@ const FavorieList = ({ favories }) => {
     const list = favories.map((image) => {
         return <SingleImage key={image.id} image={image} isFavorite />;
     });
-    return <StyledListWrapper>{list}</StyledListWrapper>;
+    return list.length > 0 ? (
+        <StyledListWrapper>{list}</StyledListWrapper>
+    ) : (
+        <Notification type="primary">
+            No favorite wallpapers, go to <Link to="/">homepage</Link>
+        </Notification>
+    );
 };
 FavorieList.propTypes = {
     favories: PropTypes.arrayOf(

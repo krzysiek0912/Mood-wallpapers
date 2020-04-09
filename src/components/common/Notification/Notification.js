@@ -17,12 +17,14 @@ class Notification extends Component {
 
     render() {
         const { isVisible } = this.state;
-        const { type, children } = this.props;
+        const { type, children, closeAction } = this.props;
         return isVisible ? (
             <div className={`notification is-${type}`}>
-                <button type="button" onClick={this.handleClose} className="delete">
-                    {' '}
-                </button>
+                {closeAction ? (
+                    <button type="button" onClick={this.handleClose} className="delete">
+                        {' '}
+                    </button>
+                ) : null}
                 {children}
             </div>
         ) : null;
