@@ -5,6 +5,7 @@ import { changeParamsToString, defaultSearchOptions } from '../utils';
 /* SELECTORS */
 export const getImages = ({ images }) => images.list;
 export const getFavImages = ({ images }) => images.fav;
+export const getSearch = (state) => state;
 export const getSearchParams = ({ images }) => images.searchParams;
 export const getSearchString = ({ images }) => {
     return changeParamsToString(images.searchParams);
@@ -24,41 +25,6 @@ export const setSearchParams = (payload) => ({ payload, type: SET_SEARCH_PARAMS 
 export const setDefaultSearchParams = (payload) => ({ payload, type: SET_DEFAULT_SEARCH_PARAMS });
 
 /* THUNKS */
-export const loadDefaultImagesRequest = () => {
-    return async (dispatch) => {
-        const defaultParams = defaultSearchOptions();
-        dispatch(startRequest(reducerName));
-        dispatch(setSearchParams(defaultParams));
-        const term = changeParamsToString(defaultParams);
-        try {
-            const res = await axios.get('https://api.unsplash.com/photos/random', {
-                params: { query: term, count: 6 },
-                headers: {
-                    Authorization: `Client-ID ${accessKey}`,
-                },
-            });
-            const results = res.data;
-            const images = results.map((result) => {
-                const { id, description, links, urls, user } = result;
-                const { name } = user;
-                const image = {
-                    id,
-                    description,
-                    links,
-                    term,
-                    urls,
-                    author: name,
-                };
-                return image;
-            }, []);
-
-            dispatch(loadImages(images));
-            dispatch(endRequest(reducerName));
-        } catch (e) {
-            dispatch(errorRequest(e.message, reducerName));
-        }
-    };
-};
 export const loadImagesRequest = (term = '') => {
     return async (dispatch) => {
         dispatch(startRequest(reducerName));
@@ -90,7 +56,7 @@ export const loadImagesRequest = (term = '') => {
         }
     };
 };
-export const setSearchParamsRequest = (searchParams = []) => {
+export const setSearchParamsRequest = (searchParams) => {
     return async (dispatch) => {
         dispatch(startRequest(reducerName));
         dispatch(setSearchParams(searchParams));
@@ -104,6 +70,8 @@ export const setSearchParamsRequest = (searchParams = []) => {
     };
 };
 
+const defaultParams = defaultSearchOptions();
+
 const localStateList = null;
 // localStorage.getItem('state') !== null ? JSON.parse(localStorage.getItem('state')) : null;
 const localStateParams = null;
@@ -114,9 +82,9 @@ const localStateParams = null;
 const initialState = {
     list: localStateList || [],
     searchParams: localStateParams || {
-        timeOfDay: '',
-        timeOfYear: '',
-        weather: '',
+        timeOfDay: defaultParams.timeOfDay,
+        timeOfYear: defaultParams.timeOfYear,
+        weather: [],
         customText: '',
     },
 };

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { FaHeart, FaRegHeart } from 'react-icons/fa';
-import { addToFavRequest } from '../../../redux/favoriteReedux';
+import { addToFavRequest, removeFromFavRequest } from '../../../redux/favoriteReedux';
 
 const StyledAuthor = styled.h2`
     position: absolute;
@@ -44,9 +44,9 @@ class SingleImage extends Component {
     };
 
     componentDidMount() {
-        const { image } = this.props;
+        const { image, isFavorite = false } = this.props;
         const { id, urls, altDescription, author, term } = image;
-        const isFavorite = false;
+
         this.setState({
             image: {
                 id,
@@ -54,8 +54,8 @@ class SingleImage extends Component {
                 altDescription,
                 author,
                 term,
-                isFavorite,
             },
+            isFavorite,
         });
     }
 
@@ -65,9 +65,13 @@ class SingleImage extends Component {
                 isFavorite: !prevState.isFavorite,
             }),
             () => {
-                const { image } = this.state;
-                const { addToFav } = this.props;
-                addToFav(image);
+                const { image, isFavorite } = this.state;
+                const { addToFav, removeFromFav } = this.props;
+                if (isFavorite) {
+                    addToFav(image);
+                } else {
+                    removeFromFav(image.id);
+                }
             },
         );
     };
@@ -99,12 +103,26 @@ class SingleImage extends Component {
 }
 
 SingleImage.propTypes = {
-    urls: PropTypes.string.isRequired,
-    author: PropTypes.string.isRequired,
+    isFavorite: PropTypes.bool,
+    addToFav: PropTypes.func.isRequired,
+    removeFromFav: PropTypes.func.isRequired,
+    image: PropTypes.shape({
+        id: PropTypes.string,
+        urls: PropTypes.shape({
+            regular: PropTypes.string,
+        }),
+        altDescription: PropTypes.string,
+        author: PropTypes.string,
+        term: PropTypes.string,
+    }).isRequired,
+};
+SingleImage.defaultProps = {
+    isFavorite: false,
 };
 
 const mapDispatchToProps = (dispatch) => ({
     addToFav: (image) => dispatch(addToFavRequest(image)),
+    removeFromFav: (id) => dispatch(removeFromFavRequest(id)),
 });
 
 export default connect(null, mapDispatchToProps)(SingleImage);

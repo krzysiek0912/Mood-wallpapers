@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import SingleImage from '../../common/SingleImage/SingleImage';
-import { loadDefaultImagesRequest, getImages, getSearchString } from '../../../redux/imagesRedux';
+import { getFavIds } from '../../../redux/favoriteReedux';
+import { loadImagesRequest, getImages, getSearchString } from '../../../redux/imagesRedux';
 
 const StyledImagesContainer = styled.div`
     display: grid;
@@ -12,16 +13,17 @@ const StyledImagesContainer = styled.div`
 
 class SearchResults extends Component {
     componentDidMount() {
-        const { loadDefaultImages, searchString } = this.props;
-        loadDefaultImages(searchString);
+        const { loadImages, searchString } = this.props;
+        loadImages(searchString);
     }
 
     render() {
-        const { images } = this.props;
+        const { images, favIds } = this.props;
 
         const imgs = images
             ? images.map((image) => {
-                  return <SingleImage key={image.id} image={image} />;
+                  const isFav = favIds.includes(image.id);
+                  return <SingleImage key={image.id} isFavorite={isFav} image={image} />;
               })
             : null;
         return (
@@ -34,7 +36,8 @@ class SearchResults extends Component {
 
 SearchResults.propTypes = {
     searchString: PropTypes.string.isRequired,
-    loadDefaultImages: PropTypes.func.isRequired,
+    loadImages: PropTypes.func.isRequired,
+    favIds: PropTypes.arrayOf(PropTypes.string).isRequired,
     images: PropTypes.arrayOf(
         PropTypes.shape({
             id: PropTypes.string,
@@ -47,10 +50,11 @@ SearchResults.propTypes = {
     ).isRequired,
 };
 const mapStateToProps = (state) => ({
+    favIds: getFavIds(state),
     images: getImages(state),
     searchString: getSearchString(state),
 });
 const mapDispatchToProps = (dispatch) => ({
-    loadDefaultImages: () => dispatch(loadDefaultImagesRequest()),
+    loadImages: (term) => dispatch(loadImagesRequest(term)),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(SearchResults);

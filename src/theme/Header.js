@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { resetRequestObj, getErrorRequest } from '../redux/requestRedux';
 import SettingSidebar from '../components/features/SettingSidebar/SettingSidebar';
@@ -19,15 +19,15 @@ const StyledH1 = styled.h1`
 const Header = (props) => {
     const { errors, resetRequest } = props;
     const notyfications = errors.map((error) => (
-        <Notification type="danger" closeAction={resetRequest}>
+        <Notification key={error} type="danger" closeAction={resetRequest}>
             {error}
         </Notification>
     ));
     return (
         <StyledWrapperHeader>
             <StyledH1 className="h1">Mood wallpapers</StyledH1>
-            <Link to="/">Home</Link>
-            <Link to="/favorite">Home</Link>
+            <NavLink to="/">Home</NavLink>
+            <NavLink to="/favorite">Favorite</NavLink>
             <SettingSidebar />
             {notyfications}
         </StyledWrapperHeader>

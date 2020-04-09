@@ -5,6 +5,7 @@ import 'bulma';
 import Home from './views/Home';
 import Favorie from './views/Favorite';
 import MainTheme from './theme/MainTheme';
+import Header from './theme/Header';
 
 // we need to map the `scale` prop we define below
 // to the transform style property
@@ -45,6 +46,7 @@ const bounceTransition = {
 const App = () => {
     return (
         <MainTheme>
+            <Header />
             <Switch>
                 <AnimatedSwitch
                     atEnter={bounceTransition.atEnter}

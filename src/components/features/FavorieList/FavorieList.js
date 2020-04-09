@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { getFavories } from '../../../redux/favoriteReedux';
+import { getFavoriesList } from '../../../redux/favoriteReedux';
 import SingleImage from '../../common/SingleImage/SingleImage';
 
 const StyledListWrapper = styled.div`
@@ -11,12 +12,26 @@ const StyledListWrapper = styled.div`
 
 const FavorieList = ({ favories }) => {
     const list = favories.map((image) => {
-        return <SingleImage key={image.id} image={image} />;
+        return <SingleImage key={image.id} image={image} isFavorite />;
     });
     return <StyledListWrapper>{list}</StyledListWrapper>;
 };
+FavorieList.propTypes = {
+    favories: PropTypes.arrayOf(
+        PropTypes.shape({
+            id: PropTypes.string,
+            urls: PropTypes.shape({
+                regular: PropTypes.string,
+            }),
+            altDescription: PropTypes.string,
+            author: PropTypes.string,
+            term: PropTypes.string,
+        }),
+    ).isRequired,
+};
+
 const mapStateToProps = (state) => ({
-    favories: getFavories(state),
+    favories: getFavoriesList(state),
 });
 
 export default connect(mapStateToProps)(FavorieList);

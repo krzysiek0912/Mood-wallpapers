@@ -166,14 +166,18 @@ class SettingSidebar extends Component {
 }
 SettingSidebar.propTypes = {
     searchParams: PropTypes.shape({
-        timeOfYear: PropTypes.shape({
-            label: PropTypes.string,
-            value: PropTypes.string,
-        }),
-        timeOfDay: PropTypes.shape({
-            label: PropTypes.string,
-            value: PropTypes.string,
-        }),
+        timeOfYear: PropTypes.arrayOf(
+            PropTypes.shape({
+                label: PropTypes.string,
+                value: PropTypes.string,
+            }),
+        ),
+        timeOfDay: PropTypes.arrayOf(
+            PropTypes.shape({
+                label: PropTypes.string,
+                value: PropTypes.string,
+            }),
+        ),
     }).isRequired,
 
     setSearchParams: PropTypes.func.isRequired,
