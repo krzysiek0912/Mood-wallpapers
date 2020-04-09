@@ -4,7 +4,6 @@ import { spring, AnimatedSwitch } from 'react-router-transition';
 import 'bulma';
 import Home from './views/Home';
 import Favorie from './views/Favorite';
-import MainTheme from './theme/MainTheme';
 import Header from './theme/Header';
 
 // we need to map the `scale` prop we define below
@@ -45,7 +44,7 @@ const bounceTransition = {
 
 const App = () => {
     return (
-        <MainTheme>
+        <>
             <Header />
             <Switch>
                 <AnimatedSwitch
@@ -59,7 +58,7 @@ const App = () => {
                     <Route exact path="/favorite" component={Favorie} />
                 </AnimatedSwitch>
             </Switch>
-        </MainTheme>
+        </>
     );
 };
 
