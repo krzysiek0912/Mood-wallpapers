@@ -3,6 +3,7 @@ import { Switch, Route } from 'react-router-dom';
 import { spring, AnimatedSwitch } from 'react-router-transition';
 import 'bulma';
 import Home from './views/Home';
+import Favorie from './views/Favorite';
 import MainTheme from './theme/MainTheme';
 
 // we need to map the `scale` prop we define below
@@ -53,7 +54,7 @@ const App = () => {
                     className="route-wrapper"
                 >
                     <Route exact path="/" component={Home} />
-                    <Route exact path="/a" component={Home} />
+                    <Route exact path="/favorite" component={Favorie} />
                 </AnimatedSwitch>
             </Switch>
         </MainTheme>

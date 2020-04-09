@@ -32,25 +32,26 @@ export const loadDefaultImagesRequest = () => {
         const term = changeParamsToString(defaultParams);
         try {
             const res = await axios.get('https://api.unsplash.com/photos/random', {
-                params: { query: term, count: 9 },
+                params: { query: term, count: 6 },
                 headers: {
                     Authorization: `Client-ID ${accessKey}`,
                 },
             });
             const results = res.data;
             const images = results.map((result) => {
-                const { id, description, links, tags, urls, user } = result;
+                const { id, description, links, urls, user } = result;
                 const { name } = user;
                 const image = {
                     id,
                     description,
                     links,
-                    tags,
+                    term,
                     urls,
                     author: name,
                 };
                 return image;
             }, []);
+
             dispatch(loadImages(images));
             dispatch(endRequest(reducerName));
         } catch (e) {
@@ -70,13 +71,13 @@ export const loadImagesRequest = (term = '') => {
             });
             const results = res.data;
             const images = results.map((result) => {
-                const { id, description, links, tags, urls, user } = result;
+                const { id, description, links, urls, user } = result;
                 const { name } = user;
                 const image = {
                     id,
                     description,
                     links,
-                    tags,
+                    term,
                     urls,
                     author: name,
                 };
@@ -103,13 +104,16 @@ export const setSearchParamsRequest = (searchParams = []) => {
     };
 };
 
-const localState =
-    localStorage.getItem('images') !== null ? JSON.parse(localStorage.getItem('images')) : [];
+const localStateList = null;
+// localStorage.getItem('state') !== null ? JSON.parse(localStorage.getItem('state')) : null;
+const localStateParams = null;
+// localStorage.getItem('state') !== null
+//     ? JSON.parse(localStorage.getItem('state')).searchParams
+//     : null;
 
 const initialState = {
-    list: localState.list || [],
-    fav: [],
-    searchParams: localState.searchParams || {
+    list: localStateList || [],
+    searchParams: localStateParams || {
         timeOfDay: '',
         timeOfYear: '',
         weather: '',

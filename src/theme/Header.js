@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { resetRequestObj, getErrorRequest } from '../redux/requestRedux';
 import SettingSidebar from '../components/features/SettingSidebar/SettingSidebar';
@@ -25,6 +26,8 @@ const Header = (props) => {
     return (
         <StyledWrapperHeader>
             <StyledH1 className="h1">Mood wallpapers</StyledH1>
+            <Link to="/">Home</Link>
+            <Link to="/favorite">Home</Link>
             <SettingSidebar />
             {notyfications}
         </StyledWrapperHeader>

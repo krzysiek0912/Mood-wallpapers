@@ -3,12 +3,13 @@ import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 
 // import reducers
 import images from './imagesRedux';
+import favorite from './favoriteReedux';
 import request from './requestRedux';
 
 const localStorageMiddleware = ({ getState }) => {
     return (next) => (action) => {
         const result = next(action);
-        if (action.payload) localStorage.setItem('images', JSON.stringify(getState().images));
+        if (action.payload) localStorage.setItem('state', JSON.stringify(getState()));
         return result;
     };
 };
@@ -16,6 +17,7 @@ const localStorageMiddleware = ({ getState }) => {
 // combine reducers
 const rootReducer = combineReducers({
     images,
+    favorite,
     request,
 });
 

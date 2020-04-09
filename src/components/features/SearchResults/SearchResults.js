@@ -18,18 +18,12 @@ class SearchResults extends Component {
 
     render() {
         const { images } = this.props;
-        const imgs = images.map((img) => {
-            const { id, urls, altDescription, author } = img;
-            return (
-                <SingleImage
-                    key={id}
-                    id={id}
-                    url={urls.regular}
-                    alt={altDescription}
-                    author={author}
-                />
-            );
-        });
+
+        const imgs = images
+            ? images.map((image) => {
+                  return <SingleImage key={image.id} image={image} />;
+              })
+            : null;
         return (
             <>
                 <StyledImagesContainer>{imgs}</StyledImagesContainer>
