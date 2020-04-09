@@ -72,21 +72,21 @@ export const setSearchParamsRequest = (searchParams) => {
 
 const defaultParams = defaultSearchOptions();
 
-const localStateList = null;
-// localStorage.getItem('state') !== null ? JSON.parse(localStorage.getItem('state')) : null;
-const localStateParams = null;
-// localStorage.getItem('state') !== null
-//     ? JSON.parse(localStorage.getItem('state')).searchParams
-//     : null;
+const localStateList =
+    localStorage.getItem('state') !== null ? JSON.parse(localStorage.getItem('state')) : [];
+const localStateParams =
+    localStorage.getItem('state') !== null
+        ? JSON.parse(localStorage.getItem('state')).searchParams
+        : {
+              timeOfDay: defaultParams.timeOfDay,
+              timeOfYear: defaultParams.timeOfYear,
+              weather: [],
+              customText: '',
+          };
 
 const initialState = {
-    list: localStateList || [],
-    searchParams: localStateParams || {
-        timeOfDay: defaultParams.timeOfDay,
-        timeOfYear: defaultParams.timeOfYear,
-        weather: [],
-        customText: '',
-    },
+    list: localStateList,
+    searchParams: localStateParams,
 };
 
 export default function reducer(statePart = initialState, action = {}) {
