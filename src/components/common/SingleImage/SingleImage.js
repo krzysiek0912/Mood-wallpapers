@@ -15,7 +15,7 @@ const StyledAuthor = styled.h2`
 `;
 const StyledContentWrapper = styled.div`
     color: #fff;
-    position: relative;
+    position: absolute;
     width: 100%;
     height: 100%;
     background: rgba(0, 0, 0, 0.5);
@@ -85,6 +85,7 @@ class SingleImage extends Component {
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             minHeight: '45vh',
+            position: 'relative',
         };
         const { isFavorite } = this.state;
         return (

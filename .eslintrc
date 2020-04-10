@@ -8,7 +8,7 @@
     "rules": {
         "react/prop-types": [1, {}],
         "react/jsx-props-no-spreading": [1, {}],
-        "react/state-in-constructor": [1, "always"],
+        "react/state-in-constructor": [0, "always"],
         "import/no-extraneous-dependencies": [
             1,
             {

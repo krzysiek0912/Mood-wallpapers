@@ -1,5 +1,6 @@
 export const firstfunc = () => {};
 export const objectValueToString = (objects) => {
+    if (!objects) return '';
     return objects
         .map((obj) => {
             return obj.value;
