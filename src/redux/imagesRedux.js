@@ -80,10 +80,11 @@ const localStateParams =
     localStorage.getItem('state') !== null
         ? JSON.parse(localStorage.getItem('state')).images.searchParams
         : {
+              place: [],
               timeOfDay: defaultParams.timeOfDay,
               timeOfYear: defaultParams.timeOfYear,
-              weather: [],
               customText: '',
+              weather: [],
           };
 
 const initialState = {

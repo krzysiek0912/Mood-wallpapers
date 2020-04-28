@@ -39,8 +39,13 @@ export const defaultSearchOptions = () => {
     return searchOptions;
 };
 
-export const changeParamsToString = (searchParams) => {
-    const { timeOfDay, timeOfYear, customText = '', weather, place } = searchParams;
+export const changeParamsToString = ({
+    timeOfDay,
+    timeOfYear,
+    customText = '',
+    weather,
+    place,
+}) => {
     const timeOfDayToString = timeOfDay ? objectValueToString(timeOfDay) : '';
     const timeOfYearToString = timeOfYear ? objectValueToString(timeOfYear) : '';
     const placeString = place ? objectValueToString(place) : '';
