@@ -73,10 +73,12 @@ export const setSearchParamsRequest = (searchParams) => {
 const defaultParams = defaultSearchOptions();
 
 const localStateList =
-    localStorage.getItem('state') !== null ? JSON.parse(localStorage.getItem('state')) : [];
+    localStorage.getItem('state') !== null
+        ? JSON.parse(localStorage.getItem('state')).images.list
+        : [];
 const localStateParams =
     localStorage.getItem('state') !== null
-        ? JSON.parse(localStorage.getItem('state')).searchParams
+        ? JSON.parse(localStorage.getItem('state')).images.searchParams
         : {
               timeOfDay: defaultParams.timeOfDay,
               timeOfYear: defaultParams.timeOfYear,

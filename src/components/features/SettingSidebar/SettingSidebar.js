@@ -45,8 +45,8 @@ class SettingSidebar extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            timeOfDay: [],
-            timeOfYear: [],
+            timeOfDay: optionsTimeOfDay,
+            timeOfYear: optionsTimeOfYear,
             weather: [],
             place: [],
             customText: '',
